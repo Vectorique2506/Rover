@@ -52,12 +52,59 @@ class HazardInspectorFSM:
         
     def run(self):
         print("Starting H.A.R.D. System...")
-        cap = cv2.VideoCapture(0) # Change to PHONE_CAMERA_URL for phone
+        url="http://10.92.204.152:8080/video"
+        cap = cv2.VideoCapture(url)
+
+        frame_count=0
+        
+        if not cap.isOpened():
+            print("CRITICAL:stream failed to open")
+            return
+        
+        
+        
         
         while True:
             ret, frame = cap.read()
-            if not ret: continue
-                
+            if not ret:
+                print("Stream lost,retrying...")
+                time.sleep(0.5)
+                continue
+
+            frame_count += 1
+
+
+            if frame_count % 3 == 0:
+                results = self.yolo_model(frame, verbose=False)
+                # Keep your existing logic for results here:
+                if len(results[0].boxes) > 0:
+                    print(">> Hazard spotted!")
+                    self.state = "TARGET_LOCKED"
+            
+            # --- FSM LOGIC (Outside the %3 block so it runs every frame) ---
+            if self.state == "TARGET_LOCKED":
+                if self.comms.current_distance <= DISTANCE_THRESHOLD_M:
+                    self.comms.send_buzzer_cmd("FAST_BEEP")
+                    self.state = "ANALYZING"
+                # ... rest of your FSM ...
+
+            # HUD overlay (Runs every frame)
+            cv2.putText(frame, f"STATE: {self.state}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            cv2.imshow("Inspector HUD", frame)
+            
+            if cv2.waitKey(1) & 0xFF == ord('q'): break
+
+            
+
+
+
+
+
+
+
+
+
+
             if self.state == "SCANNING":
                 # Ultralytics inference
                 results = self.yolo_model(frame, verbose=False)
