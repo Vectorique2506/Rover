@@ -1,0 +1,12 @@
+opencv-python
+numpy
+onnxruntime
+requests
+paho-mqtt
+Flask
+Flask-SocketIO
+eventlet
+python-dotenv
+
+
+
