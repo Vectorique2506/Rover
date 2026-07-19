@@ -46,6 +46,12 @@ H.A.R.D. avoids the pitfalls of monolithic systems by distributing the computati
 
 ---
 
+
+
+
+![alt text](https://github.com/Vectorique2506/Rover/blob/main/WhatsApp%20Image%202026-07-19%20at%2010.52.18%20AM.jpeg)
+
+
 ##  System Architecture & Data Flow
 
 ```text
