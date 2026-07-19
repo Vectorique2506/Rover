@@ -48,29 +48,10 @@ H.A.R.D. avoids the pitfalls of monolithic systems by distributing the computati
 
 
 
+##  System Architecture & Data Flow
 
 ![alt text](https://github.com/Vectorique2506/Rover/blob/main/WhatsApp%20Image%202026-07-19%20at%2010.52.18%20AM.jpeg)
 
 
-##  System Architecture & Data Flow
 
-```text
-               [  Android Phone ] ─── (Live Camera Stream)
-                       │
-               HTTP Live Stream
-                       │
-                       ▼
-        [  Snapdragon Copilot+ PC ]
-   ┌────────────────────────────────────────┐
-   │  YOLOv8n Object Detection (Hexagon NPU)│ 
-   │  Multi-Object Tracking & State Engine  │
-   │  Qwen2.5-VL Contextual Analysis (GPU)  │
-   └────────────────────────────────────────┘
-                       │
-           Ultra-Low Latency MQTT
-                       │
-                       ▼
-             [  Arduino UNO Q ]
-   ┌─────────────────────────────────────────┐
-   │           Modulino Buzzer               │
-   └─────────────────────────────────────────┘
+
