@@ -5,7 +5,7 @@ import moondream as md
 from ultralytics import YOLO
 
 # --- CONFIGURATION ---
-PHONE_CAMERA_URL = "http://10.92.204.152:8080/video"
+PHONE_CAMERA_URL = "http://10.92.204.152:8080/video" 
 ARDUINO_PORT = 'COM3' # CHANGE THIS TO YOUR ACTUAL PORT
 BAUD_RATE = 9600
 
@@ -40,11 +40,9 @@ class HazardInspectorFSM:
         try:
             img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             answer = self.vlm.query(img, "Is this a safety hazard? If so, describe it in 5 words.")
-            return str(answer.answer)
+            return answer.answer
         except Exception as e:
-            print(f"VLMERROR: {e}")
-            return "vlm Busy/Failed"
-        
+            return "Analysis Error"
 
     def run(self):
         print("Starting Hazard Inspector System...")
@@ -62,7 +60,7 @@ class HazardInspectorFSM:
             # --- 1. AI INFERENCE (YOLO) ---
             detections = []
             if frame_count % 3 == 0:
-                results = self.yolo_model(frame, verbose=False,classes=[28])
+                results = self.yolo_model(frame, verbose=False)
                 detections = results[0].boxes
                 
                 if len(detections) > 0 and self.state == "SCANNING":
@@ -92,22 +90,6 @@ class HazardInspectorFSM:
             elif self.state == "ANALYZING":
                 print(">> Running Deep Analysis...")
                 report = self.get_vlm_analysis(frame)
-
-                if("red" in report.lower() and "box" in report.lower()):
-                    self.hazard_log.append(f"[{timestamp}] RED BOX CONFIRMED: {report}")
-                else:
-                    self.hazard_log.append(f"[{timestamp}] False Alarm.")
-
-                self.state="SCANNING"
-
-                
-
-
-
-                   
-
-
-
                 timestamp = time.strftime("%H:%M:%S")
                 self.hazard_log.append(f"[{timestamp}] {report}")
                 print(f"REPORT: {report}")
@@ -143,8 +125,6 @@ class HazardInspectorFSM:
 if __name__ == "__main__":
     inspector = HazardInspectorFSM()
     inspector.run()
-
-
 
 
 
