@@ -34,6 +34,12 @@ H.A.R.D. avoids the pitfalls of monolithic systems by distributing the computati
 |  Snapdragon Copilot+ PC | Neural Processing Hub | Real-time Object Detection (**Hexagon NPU**) + Complex Vision-Language Reasoning (**Adreno GPU**). |
 |  Arduino UNO Q | Physical Actuation Layer | Time-of-Flight (ToF) spatial telemetry, instantaneous audio/visual haptic alarms. |
 
+
+
+
+
+![alt text](https://github.com/Vectorique2506/Rover/blob/main/WhatsApp%20Image%202026-07-19%20at%2012.13.27%20PM.jpeg)
+
 ---
 
 ##  Key Capabilities & Innovations
@@ -49,6 +55,11 @@ H.A.R.D. avoids the pitfalls of monolithic systems by distributing the computati
 
 
 ##  System Architecture & Data Flow
+
+
+
+
+
 
 ![alt text](https://github.com/Vectorique2506/Rover/blob/main/WhatsApp%20Image%202026-07-19%20at%2010.52.18%20AM.jpeg)
 
